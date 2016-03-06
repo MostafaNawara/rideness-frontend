@@ -21,7 +21,7 @@ export default class Login extends Component {
   }
 
   render() {
-    const {user, logout} = this.props;
+    const { user, logout } = this.props;
     const styles = require('./Login.scss');
     return (
       <div className={styles.loginPage + ' container'}>

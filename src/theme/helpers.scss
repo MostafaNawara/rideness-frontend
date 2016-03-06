@@ -1,0 +1,67 @@
+$sizes: (
+  xs: 0.5,
+  sm: 1,
+  md: 1.5,
+  lg: 2
+);
+
+$attributes: (
+  'margin',
+  'padding'
+);
+
+@each $size, $measurement in $sizes{
+  @each $attribute in $attributes{
+    .#{$attribute}-#{$size}-all{
+      #{$attribute}: #{$measurement}rem;
+    }
+    .#{$attribute}-#{$size}-top{
+      #{$attribute}-top: #{$measurement}rem;
+    }
+    .#{$attribute}-#{$size}-bottom{
+      #{$attribute}-bottom: #{$measurement}rem;
+    }
+    .#{$attribute}-#{$size}{
+      #{$attribute}: #{$measurement}rem;
+    }
+    .#{$attribute}-#{$size}-left{
+      #{$attribute}-left: #{$measurement}rem;
+    }
+    .#{$attribute}-#{$size}-right{
+      #{$attribute}-right: #{$measurement}rem;
+    }
+    .#{$attribute}-#{$size}-v{
+      #{$attribute}-top: #{$measurement}rem;
+      #{$attribute}-bottom: #{$measurement}rem;
+    }
+    .#{$attribute}-#{$size}-h{
+      #{$attribute}-left: #{$measurement}rem;
+      #{$attribute}-right: #{$measurement}rem;
+    }
+  }
+}
+.margin-none{
+  margin: 0;
+}
+.padding-none{
+  padding: 0;
+}
+
+.inline{
+  display: inline;
+}
+.inline-block{
+  display: inline-block;
+}
+.block{
+  display: block;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+.expand-container{
+  margin-left: -15px;
+  margin-right: -15px;
+}

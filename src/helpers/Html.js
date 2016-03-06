@@ -33,6 +33,8 @@ export default class Html extends Component {
           {head.link.toComponent()}
           {head.script.toComponent()}
 
+          <script id="digits-sdk" src="https://cdn.digits.com/1/sdk.js" async></script>
+
           <link rel="shortcut icon" href="/favicon.ico" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           {/* styles (will be present only in production with webpack extract text plugin) */}
