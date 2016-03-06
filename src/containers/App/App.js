@@ -12,7 +12,6 @@ import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 
 // Redux
-import { isLoaded as isInfoLoaded, load as loadInfo } from 'redux/modules/info';
 import { isLoaded as isAuthLoaded, load as loadAuth, logout } from 'redux/modules/auth';
 
 import config from '../../config';
@@ -21,9 +20,6 @@ import config from '../../config';
   promise: ({store: {dispatch, getState}}) => {
     const promises = [];
 
-    if (!isInfoLoaded(getState())) {
-      promises.push(dispatch(loadInfo()));
-    }
     if (!isAuthLoaded(getState())) {
       promises.push(dispatch(loadAuth()));
     }
@@ -79,11 +75,8 @@ export default class App extends Component {
           </Navbar.Header>
 
           <Navbar.Collapse eventKey={0}>
-            <Nav navbar>
-              {user && <LinkContainer to="/chat">
-                <NavItem eventKey={1}>Chat</NavItem>
-              </LinkContainer>}
-
+            <Nav navbar />
+            <Nav navbar pullRight>
               {!user &&
               <LinkContainer to="/login">
                 <NavItem eventKey={5}>Login</NavItem>
@@ -95,7 +88,6 @@ export default class App extends Component {
                 </NavItem>
               </LinkContainer>}
             </Nav>
-            <Nav navbar pullRight />
           </Navbar.Collapse>
         </Navbar>
 

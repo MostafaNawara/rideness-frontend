@@ -3,7 +3,7 @@ export default (sequelize, DataTypes) => {
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     phoneNumber: DataTypes.STRING,
-    confirmationCode: DataTypes.STRING
+    authData: DataTypes.JSON
   }, {});
 
   return User;

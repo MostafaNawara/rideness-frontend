@@ -46,6 +46,7 @@ export default (store) => {
       <Route path="plans" component={Plans}/>
       <Route path="about" component={About}/>
       <Route path="login" component={Login}/>
+      <Route path="signup" component={Login}/>
 
       { /* Catch all route */ }
       <Route path="*" component={NotFound} status={404} />
