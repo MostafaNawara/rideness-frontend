@@ -1,14 +1,12 @@
 {
-  "name": "react-redux-universal-hot-example",
-  "description": "Example of an isomorphic (universal) webapp using react redux and hot reloading",
-  "author": "Erik Rasmussen <rasmussenerik@gmail.com> (http://github.com/erikras)",
+  "name": "Rideness",
+  "description": "Rideness",
+  "author": "Rideness",
   "license": "MIT",
   "version": "0.9.0",
   "repository": {
-    "type": "git",
-    "url": "https://github.com/erikras/react-redux-universal-hot-example"
+    "type": "git"
   },
-  "homepage": "https://github.com/erikras/react-redux-universal-hot-example",
   "keywords": [
     "react",
     "isomorphic",

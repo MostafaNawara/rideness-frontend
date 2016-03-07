@@ -1,22 +1,17 @@
-version: '2'
-services:
-  web:
-    build: .
-    ports:
-      - "80:8080"
-    volumes:
-      - .:/rideness-frontend
-    depends_on:
-      - db
-    links:
-      - db
-  db:
-    image: postgres:9.4.4
-    ports:
-      - "5432:5432" # Bind host port 5432 to PostgreSQL port 5432
-    volumes:
-      - ./db/dumps:/app-db-dumps # We're mounting this folder so we can backup/restore database dumps from our app folder.
-    environment:
-      LC_ALL: C.UTF-8
-      POSTGRES_PASSWORD: docker
-      POSTGRES_USER: docker
+web:
+  build: .
+  ports:
+    - "80:8080"
+    - "3030:3030"
+  volumes:
+    - .:/rideness-frontend
+  links:
+    - db:db
+db:
+  image: postgres:9.4.4
+  volumes:
+    - ./db/dumps:/app-db-dumps # We're mounting this folder so we can backup/restore database dumps from our app folder.
+  environment:
+    LC_ALL: C.UTF-8
+    POSTGRES_PASSWORD: docker
+    POSTGRES_USER: docker

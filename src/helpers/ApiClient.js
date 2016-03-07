@@ -19,7 +19,7 @@ function formatUrl(path) {
  *
  * Remove it at your own risk.
  */
-export defaul class {
+export default class {
   constructor(req) {
     methods.forEach((method) =>
       this[method] = (path, { params, data } = {}) => new Promise((resolve, reject) => {

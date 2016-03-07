@@ -18,8 +18,8 @@ export default {
   production: {
     username: 'docker',
     password: 'docker',
-    database: 'rideness_production',
-    host: '127.0.0.1',
+    database: 'docker',
+    host: 'db',
     dialect: 'postgres',
     secret: '14f4d34cdb87d2b36ffb9351b3889dca1db390f145b609852b11262a3ee8871c892660b58afe93e14d74c5dd74fe8d9a'
   }
