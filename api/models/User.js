@@ -3,6 +3,7 @@ export default (sequelize, DataTypes) => {
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     phoneNumber: DataTypes.STRING,
+    plan: DataTypes.STRING,
     authData: DataTypes.JSON
   }, {});
 

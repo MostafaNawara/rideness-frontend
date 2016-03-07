@@ -40,7 +40,7 @@ export default class Login extends Component {
     event.preventDefault();
 
     const input = this.refs.code.refs.input;
-    this.props.verify(input.value, this.state.phoneNumber);
+    this.props.verify(input.value, this.state.phoneNumber, this.props.location.query.plan);
     input.value = '';
   }
 

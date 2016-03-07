@@ -5,6 +5,7 @@ const authy = require('authy')(config.authyKey);
 
 export default function verify(req) {
   const phoneNumber = req.body.phoneNumber.toString();
+  const plan = req.body.plan;
 
   return new Promise((resolve, reject) => {
     authy.phones().verification_check(phoneNumber, '1', req.body.code, (err, authData) => {
@@ -14,7 +15,7 @@ export default function verify(req) {
         models.User
           .findOrCreate({
             where: { phoneNumber },
-            defaults: { authData }
+            defaults: { authData, plan }
           })
           .spread((user, created) => {
             req.session.user = user;

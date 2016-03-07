@@ -95,13 +95,14 @@ export function load() {
   };
 }
 
-export function verify(code, phoneNumber) {
+export function verify(code, phoneNumber, plan) {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     promise: (client) => client.post('/auth/verify', {
       data: {
         code,
-        phoneNumber
+        phoneNumber,
+        plan
       }
     })
   };
