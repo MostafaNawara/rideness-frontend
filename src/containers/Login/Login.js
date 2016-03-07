@@ -3,52 +3,111 @@ import {connect} from 'react-redux';
 import Helmet from 'react-helmet';
 import * as authActions from 'redux/modules/auth';
 
+import Grid from 'react-bootstrap/lib/Grid';
+import Row from 'react-bootstrap/lib/Row';
+import Col from 'react-bootstrap/lib/Col';
+import Input from 'react-bootstrap/lib/Input';
+import Button from 'react-bootstrap/lib/Button';
+import Panel from 'react-bootstrap/lib/Panel';
+
+const styles = require('./style.scss');
+
 @connect(
-  state => ({user: state.auth.user}),
+  state => ({auth: state.auth}),
   authActions)
 export default class Login extends Component {
   static propTypes = {
-    user: PropTypes.object,
+    auth: PropTypes.object,
     login: PropTypes.func,
-    logout: PropTypes.func
+    verify: PropTypes.func,
+    location: PropTypes.object
   }
 
-  handleSubmit = (event) => {
+  state = {
+    phoneNumber: ''
+  }
+
+  handleSubmit(event) {
     event.preventDefault();
-    const input = this.refs.username;
+
+    const input = this.refs.phoneNumber.refs.input;
     this.props.login(input.value);
+    this.setState({phoneNumber: input.value});
     input.value = '';
   }
 
-  render() {
-    const {user, logout} = this.props;
-    const styles = require('./Login.scss');
-    return (
-      <div className={styles.loginPage + ' container'}>
-        <Helmet title="Login"/>
-        <h1>Login</h1>
-        {!user &&
-        <div>
-          <form className="login-form form-inline" onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <input type="text" ref="username" placeholder="Enter a username" className="form-control"/>
-            </div>
-            <button className="btn btn-success" onClick={this.handleSubmit}><i className="fa fa-sign-in"/>{' '}Log In
-            </button>
-          </form>
-          <p>This will "log you in" as this user, storing the username in the session of the API server.</p>
-        </div>
-        }
-        {user &&
-        <div>
-          <p>You are currently logged in as {user.name}.</p>
+  handleVerify(event) {
+    event.preventDefault();
 
-          <div>
-            <button className="btn btn-danger" onClick={logout}><i className="fa fa-sign-out"/>{' '}Log Out</button>
-          </div>
-        </div>
-        }
-      </div>
+    const input = this.refs.code.refs.input;
+    this.props.verify(input.value, this.state.phoneNumber, this.props.location.query.plan);
+    input.value = '';
+  }
+
+  renderPlanOnUs() {
+    if (this.props.location.query.plan !== '5') return false;
+
+    return (
+      <h3>
+        Don't worry about paying, we are still in beta and this one is on us! Free for now, but not free forever ;)
+      </h3>
+    );
+  }
+
+  renderLoginLanguage() {
+    if (this.props.location.query.plan) {
+      return 'Sign up';
+    }
+
+    return 'Log in';
+  }
+
+  renderPanel() {
+    if (this.state.phoneNumber && this.props.auth.awaitingVerification) {
+      return (
+        <Panel>
+          <h3 className={styles.title}>
+            <small>
+              A code as been sent to {this.state.phoneNumber}
+            </small>
+          </h3>
+          <form className="login-form" onSubmit={this.handleVerify.bind(this)}>
+            <Input ref="code" type="text" placeholder="Code..." />
+            <Button onClick={this.handleVerify.bind(this)}>
+              Verify
+            </Button>
+          </form>
+        </Panel>
+      );
+    }
+
+    return (
+      <Panel>
+        <h3 className={styles.title}>
+          <small>
+            {this.renderLoginLanguage()}
+          </small>
+        </h3>
+        <form className="login-form" onSubmit={this.handleSubmit.bind(this)}>
+          <Input ref="phoneNumber" type="text" placeholder="Phone number..." />
+          <Button onClick={this.handleSubmit.bind(this)}>
+            {this.renderLoginLanguage()}
+          </Button>
+        </form>
+      </Panel>
+    );
+  }
+
+  render() {
+    return (
+      <Grid className={`page-container`} fluid>
+        <Helmet title="Login"/>
+        <Row>
+          <Col md={4} mdOffset={4}>
+            {this.renderPanel()}
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }

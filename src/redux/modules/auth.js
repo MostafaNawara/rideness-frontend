@@ -1,6 +1,9 @@
 const LOAD = 'redux-example/auth/LOAD';
 const LOAD_SUCCESS = 'redux-example/auth/LOAD_SUCCESS';
 const LOAD_FAIL = 'redux-example/auth/LOAD_FAIL';
+const LOGIN_START = 'redux-example/auth/LOGIN_START';
+const LOGIN_START_SUCCESS = 'redux-example/auth/LOGIN_START_SUCCESS';
+const LOGIN_START_FAIL = 'redux-example/auth/LOGIN_START_FAIL';
 const LOGIN = 'redux-example/auth/LOGIN';
 const LOGIN_SUCCESS = 'redux-example/auth/LOGIN_SUCCESS';
 const LOGIN_FAIL = 'redux-example/auth/LOGIN_FAIL';
@@ -9,7 +12,8 @@ const LOGOUT_SUCCESS = 'redux-example/auth/LOGOUT_SUCCESS';
 const LOGOUT_FAIL = 'redux-example/auth/LOGOUT_FAIL';
 
 const initialState = {
-  loaded: false
+  loaded: false,
+  verified: false
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -33,6 +37,11 @@ export default function reducer(state = initialState, action = {}) {
         loaded: false,
         error: action.error
       };
+    case LOGIN_START_SUCCESS:
+      return {
+        verified: false,
+        awaitingVerification: true
+      };
     case LOGIN:
       return {
         ...state,
@@ -42,6 +51,8 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         loggingIn: false,
+        verified: true,
+        awaitingVerification: false,
         user: action.result
       };
     case LOGIN_FAIL:
@@ -80,18 +91,32 @@ export function isLoaded(globalState) {
 export function load() {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get('/loadAuth')
+    promise: (client) => client.get('/auth/load')
   };
 }
 
-export function login(name) {
+export function verify(code, phoneNumber, plan) {
   return {
-    types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
-    promise: (client) => client.post('/login', {
+    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+    promise: (client) => client.post('/auth/verify', {
       data: {
-        name: name
+        code,
+        phoneNumber,
+        plan
       }
     })
+  };
+}
+
+export function login(phoneNumber) {
+  return {
+    types: [LOGIN_START, LOGIN_START_SUCCESS, LOGIN_START_FAIL],
+    promise: (client) => client.post('/auth/login', {
+      data: {
+        phoneNumber
+      }
+    }),
+    phoneNumber
   };
 }
 

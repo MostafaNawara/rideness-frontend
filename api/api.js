@@ -1,15 +1,20 @@
 import express from 'express';
 import session from 'express-session';
 import bodyParser from 'body-parser';
-import config from '../src/config';
-import * as actions from './actions/index';
-import {mapUrl} from 'utils/url.js';
 import PrettyError from 'pretty-error';
 import http from 'http';
+import cookieParser from 'cookie-parser';
 import SocketIo from 'socket.io';
+
+import config from '../src/config';
+import apiConfig from './config/config';
+import * as actions from './actions/index';
+import {mapUrl} from 'utils/url.js';
+import models from './models';
 
 const pretty = new PrettyError();
 const app = express();
+models.sequelize.sync();
 
 const server = new http.Server(app);
 
@@ -17,11 +22,12 @@ const io = new SocketIo(server);
 io.path('/ws');
 
 app.use(session({
-  secret: 'react and redux rule!!!!',
+  secret: apiConfig.secret,
   resave: false,
   saveUninitialized: false,
   cookie: { maxAge: 60000 }
 }));
+app.use(cookieParser());
 app.use(bodyParser.json());
 
 
