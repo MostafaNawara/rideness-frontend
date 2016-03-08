@@ -67,6 +67,7 @@ if (config.apiPort) {
     if (err) {
       console.error(err);
     }
+    console.info('ENV: ', process.env.NODE_ENV);
     console.info('----\n==> 🌎  API is running on port %s', config.apiPort);
     console.info('==> 💻  Send requests to http://%s:%s', config.apiHost, config.apiPort);
   });
