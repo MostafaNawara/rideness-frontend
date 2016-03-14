@@ -14,6 +14,7 @@ module.exports = Object.assign({
   port: process.env.PORT,
   apiHost: process.env.APIHOST || 'localhost',
   apiPort: process.env.APIPORT,
+  stripePublicKey: process.env.STRIPE_PUBLIC_KEY,
   app: {
     title: 'Rideness',
     description: 'Drive smarter, not harder.',

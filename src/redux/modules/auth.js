@@ -1,15 +1,15 @@
-const LOAD = 'redux-example/auth/LOAD';
-const LOAD_SUCCESS = 'redux-example/auth/LOAD_SUCCESS';
-const LOAD_FAIL = 'redux-example/auth/LOAD_FAIL';
-const LOGIN_START = 'redux-example/auth/LOGIN_START';
-const LOGIN_START_SUCCESS = 'redux-example/auth/LOGIN_START_SUCCESS';
-const LOGIN_START_FAIL = 'redux-example/auth/LOGIN_START_FAIL';
-const LOGIN = 'redux-example/auth/LOGIN';
-const LOGIN_SUCCESS = 'redux-example/auth/LOGIN_SUCCESS';
-const LOGIN_FAIL = 'redux-example/auth/LOGIN_FAIL';
-const LOGOUT = 'redux-example/auth/LOGOUT';
-const LOGOUT_SUCCESS = 'redux-example/auth/LOGOUT_SUCCESS';
-const LOGOUT_FAIL = 'redux-example/auth/LOGOUT_FAIL';
+const LOAD = '@ridness/auth/LOAD';
+const LOAD_SUCCESS = '@ridness/auth/LOAD_SUCCESS';
+const LOAD_FAIL = '@ridness/auth/LOAD_FAIL';
+const LOGIN_START = '@ridness/auth/LOGIN_START';
+const LOGIN_START_SUCCESS = '@ridness/auth/LOGIN_START_SUCCESS';
+const LOGIN_START_FAIL = '@ridness/auth/LOGIN_START_FAIL';
+const LOGIN = '@ridness/auth/LOGIN';
+const LOGIN_SUCCESS = '@ridness/auth/LOGIN_SUCCESS';
+const LOGIN_FAIL = '@ridness/auth/LOGIN_FAIL';
+const LOGOUT = '@ridness/auth/LOGOUT';
+const LOGOUT_SUCCESS = '@ridness/auth/LOGOUT_SUCCESS';
+const LOGOUT_FAIL = '@ridness/auth/LOGOUT_FAIL';
 
 const initialState = {
   loaded: false,

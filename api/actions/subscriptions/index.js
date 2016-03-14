@@ -1,4 +1,5 @@
-const stripe = require('stripe')('sk_test_TQ9kqyQTMsEKoIZaoEipFOe2');
+import config from '../../config/config';
+const stripe = require('stripe')(config.stripePrivateKey);
 
 export default function(req) {
   return new Promise((resolve, reject) => {

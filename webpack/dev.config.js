@@ -1,4 +1,5 @@
 require('babel-polyfill');
+require('dotenv').load();
 
 // Webpack config for development
 var fs = require('fs');

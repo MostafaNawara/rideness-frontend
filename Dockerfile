@@ -17,6 +17,7 @@ ADD . /rideness-frontend/
 ENV NODE_ENV production
 ENV APIPORT 3030
 ENV PORT 8080
+ENV API_URL https://rideness.herokuapp.com
 
 RUN npm run build
 

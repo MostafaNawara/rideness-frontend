@@ -1,16 +1,34 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
-import { Link } from 'react-router';
+
+import { connect } from 'react-redux';
+import { asyncConnect } from 'redux-async-connect';
 
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Panel from 'react-bootstrap/lib/Panel';
-import ListGroup from 'react-bootstrap/lib/ListGroup';
-import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 
+import EventsFeed from 'components/EventsFeed';
+
+import { load } from 'redux/modules/events';
+
+@asyncConnect([{
+  promise: ({store: { dispatch }}) => {
+    return dispatch(load());
+  }
+}])
+@connect(
+  state => ({events: state.events.data})
+)
 export default class Home extends Component {
+  static propTypes = {
+    events: PropTypes.array
+  }
+
   render() {
+    const { events } = this.props;
+
     const styles = require('./Home.scss');
 
     return (
@@ -24,7 +42,7 @@ export default class Home extends Component {
                   Drive smarter, not harder.
                 </h1>
                 <h4>
-                  Make sure you're at the right place when surge starts - we tell you where it will happen before it does.
+                  Make sure you are at the right place when surge starts - we tell you where it will happen before it does.
                 </h4>
               </Col>
             </Row>
@@ -32,25 +50,12 @@ export default class Home extends Component {
         </div>
         <Grid fluid className={styles.eventsList}>
           <Row>
-            <Col md={6} mdOffset={3}>
+            <Col md={10} mdOffset={1}>
               <Panel>
-                <h3 className="text-center">
+                <h3 className="text-center margin-md-bottom">
                   Events happening in San Francisco
                 </h3>
-                <ListGroup fill>
-                  <ListGroupItem>Item 1</ListGroupItem>
-                  <ListGroupItem>Item 2</ListGroupItem>
-                  <ListGroupItem>
-                    <Row>
-                      <Col xs={12}>
-                        {/* we should A/B test the messaging */}
-                        <h4>
-                          38 more events... <Link to="/signup">see more</Link>
-                        </h4>
-                      </Col>
-                    </Row>
-                  </ListGroupItem>
-                </ListGroup>
+                <EventsFeed events={events} />
               </Panel>
             </Col>
           </Row>

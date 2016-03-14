@@ -83,18 +83,21 @@ export default class App extends Component {
               <LinkContainer to="/login">
                 <NavItem eventKey={5}>Login</NavItem>
               </LinkContainer>}
-              <NavItem eventKey={6.1} className={`subscription ${user ? '' : 'hidden'}`}>
-                <form action="/api/subscriptions" method="POST">
-                  <script
-                    src="https://checkout.stripe.com/checkout.js" className="stripe-button"
-                    data-key="pk_test_MukacIiIHXv4XT54RKjz8Hd7"
-                    data-name="Ridness"
-                    data-description="Premium plan"
-                    data-amount="500"
-                    data-label="Go premium" >
-                  </script>
-                </form>
-              </NavItem>
+              {user &&
+                <NavItem eventKey={6.1} className={`subscription`}>
+                  <form action="/api/subscriptions" method="POST">
+                    <input type="hidden" defaultValue={user.phoneNumber} />
+                    <script
+                      src="https://checkout.stripe.com/checkout.js" className="stripe-button"
+                      data-key={config.stripePublicKey}
+                      data-name="Ridness"
+                      data-description="Premium plan"
+                      data-amount="500"
+                      data-label="Go premium" >
+                    </script>
+                  </form>
+                </NavItem>
+              }
               {user &&
               <LinkContainer to="/logout">
                 <NavItem eventKey={6} className="logout-link" onClick={this.handleLogout}>

@@ -1,3 +1,6 @@
+import { camelizeKeys } from 'humps';
+
+
 export default function clientMiddleware(client) {
   return ({dispatch, getState}) => {
     return next => action => {
@@ -15,7 +18,7 @@ export default function clientMiddleware(client) {
 
       const actionPromise = promise(client);
       actionPromise.then(
-        (result) => next({...rest, result, type: SUCCESS}),
+        (result) => next({...rest, result: camelizeKeys(result), type: SUCCESS}),
         (error) => next({...rest, error, type: FAILURE})
       ).catch((error)=> {
         console.error('MIDDLEWARE ERROR:', error);
