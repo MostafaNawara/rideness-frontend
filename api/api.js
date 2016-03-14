@@ -1,9 +1,9 @@
 import express from 'express';
-import session from 'express-session';
 import bodyParser from 'body-parser';
 import PrettyError from 'pretty-error';
 import http from 'http';
 import cookieParser from 'cookie-parser';
+import cookieSession from 'cookie-session';
 import SocketIo from 'socket.io';
 
 import config from '../src/config';
@@ -21,12 +21,11 @@ const server = new http.Server(app);
 const io = new SocketIo(server);
 io.path('/ws');
 
-app.use(session({
-  secret: apiConfig.secret,
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 60000 }
-}));
+app.use(cookieSession({
+  name: 'session',
+  keys: [apiConfig.secret]
+}))
+
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
