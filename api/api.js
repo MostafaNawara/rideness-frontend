@@ -29,7 +29,7 @@ app.use(session({
 }));
 app.use(cookieParser());
 app.use(bodyParser.json());
-
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use((req, res) => {
   const splittedUrlPath = req.url.split('?')[0].split('/').slice(1);

@@ -4,3 +4,4 @@ export login from './login';
 export logout from './logout';
 export * as widget from './widget/index';
 export * as auth from './auth/index';
+export subscriptions from './subscriptions';

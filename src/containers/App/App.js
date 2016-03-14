@@ -10,6 +10,7 @@ import Helmet from 'react-helmet';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
+import Alert from 'react-bootstrap/lib/Alert';
 
 // Redux
 import { isLoaded as isAuthLoaded, load as loadAuth, logout } from 'redux/modules/auth';
@@ -28,12 +29,13 @@ import config from '../../config';
   }
 }])
 @connect(
-  state => ({user: state.auth.user}),
+  state => ({user: state.auth.user, location: state.routing.location}),
   {logout, pushState: routeActions.push})
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     user: PropTypes.object,
+    location: PropTypes.object,
     logout: PropTypes.func.isRequired,
     pushState: PropTypes.func.isRequired
   };
@@ -58,7 +60,7 @@ export default class App extends Component {
   };
 
   render() {
-    const {user} = this.props;
+    const { user, location } = this.props;
     const styles = require('./App.scss');
 
     return (
@@ -81,6 +83,18 @@ export default class App extends Component {
               <LinkContainer to="/login">
                 <NavItem eventKey={5}>Login</NavItem>
               </LinkContainer>}
+              <NavItem eventKey={6.1} className={`subscription ${user ? '' : 'hidden'}`}>
+                <form action="/api/subscriptions" method="POST">
+                  <script
+                    src="https://checkout.stripe.com/checkout.js" className="stripe-button"
+                    data-key="pk_test_MukacIiIHXv4XT54RKjz8Hd7"
+                    data-name="Ridness"
+                    data-description="Premium plan"
+                    data-amount="500"
+                    data-label="Go premium" >
+                  </script>
+                </form>
+              </NavItem>
               {user &&
               <LinkContainer to="/logout">
                 <NavItem eventKey={6} className="logout-link" onClick={this.handleLogout}>
@@ -92,6 +106,12 @@ export default class App extends Component {
         </Navbar>
 
         <div className={styles.appContent}>
+          {
+            location && (location.query.success || location.query.error) &&
+            <Alert bsStyle={location.query.error ? 'danger' : 'info'}>
+              {location.query.success || location.query.error}
+            </Alert>
+          }
           {this.props.children}
         </div>
       </div>

@@ -45,7 +45,7 @@ export default class Home extends Component {
                       <Col xs={12}>
                         {/* we should A/B test the messaging */}
                         <h4>
-                          38 more events... <Link to="/plans">see more</Link>
+                          38 more events... <Link to="/signup">see more</Link>
                         </h4>
                       </Col>
                     </Row>

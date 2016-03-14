@@ -55,7 +55,7 @@ export default class Login extends Component {
   }
 
   renderLoginLanguage() {
-    if (this.props.location.query.plan) {
+    if (this.props.location.query.plan || this.props.location.pathname.includes('signup')) {
       return 'Sign up';
     }
 
